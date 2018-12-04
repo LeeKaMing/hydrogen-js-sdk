@@ -10,12 +10,13 @@ const randomOption = config.RANDOM_OPTION
 
 describe('BaseRecord', () => {
   let product = null
-  let randomNumber, randomNumber1, randomNumber2, randomArray
+  let randomNumber, randomNumber1, randomNumber2, randomArray, randomDate
 
   before(() => {
     randomNumber = faker.random.number(randomOption)
     randomNumber1 = faker.random.number(randomOption)
     randomNumber2 = faker.random.number(randomOption)
+    randomDate = faker.date.past().toISOString()
     randomArray = helper.generateRandomArray()
   })
 
@@ -39,6 +40,11 @@ describe('BaseRecord', () => {
     product.set({amount: randomNumber2})
     product.set({obj1: {a:randomNumber1, b:randomArray}})
     expect(product._record).to.deep.equal({obj1: {a:randomNumber1, b:randomArray}})
+  })
+
+  it('#set array-date', () => {
+    product.set({array_date: [randomDate]})
+    expect(product._record).to.deep.equal({array_date: [randomDate]})
   })
 
   it('#set GeoPoint', () => {
